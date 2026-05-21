@@ -1,7 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
-
 interface VideoPlayerProps {
   videoUrl: string;
   title: string;
@@ -9,44 +5,72 @@ interface VideoPlayerProps {
 
 export default function VideoPlayer({ videoUrl, title }: VideoPlayerProps) {
   return (
-    <div className="glass overflow-hidden">
-      <div className="relative w-full aspect-[16/9] flex flex-col items-center justify-center gap-4 bg-black/30">
+    <div
+      style={{
+        background: "#fff",
+        borderRadius: 12,
+        overflow: "hidden",
+        boxShadow:
+          "0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06)",
+      }}
+    >
+      <div
+        style={{
+          width: "100%",
+          aspectRatio: "16/9",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "1rem",
+          background: "#faf9f7",
+        }}
+      >
         {/* Play icon */}
-        <motion.div
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          className="w-16 h-16 rounded-full bg-accent/20 border border-accent/30 flex items-center justify-center"
+        <div
+          style={{
+            width: 56,
+            height: 56,
+            borderRadius: "50%",
+            background: "#fff",
+            border: "1.5px solid #d8d6cf",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
           <svg
-            className="w-7 h-7 text-accent ml-1"
-            fill="currentColor"
+            width="22"
+            height="22"
             viewBox="0 0 24 24"
+            fill="#1a1a1a"
+            style={{ marginLeft: 3 }}
           >
             <path d="M8 5v14l11-7z" />
           </svg>
-        </motion.div>
+        </div>
 
-        <p className="text-sm text-text-muted px-4 text-center">
-          视频来自央视网，点击下方按钮在新标签页中观看
+        <p style={{ color: "#9ca3af", fontSize: "0.88rem", textAlign: "center", padding: "0 1rem" }}>
+          视频来自央视网，请在外部页面观看
         </p>
 
-        <motion.a
+        <a
           href={videoUrl}
           target="_blank"
           rel="noopener noreferrer"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent/15 border border-accent/25 text-accent text-sm hover:bg-accent/25 transition-colors"
+          className="btn"
         >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>
           在央视网观看完整视频
-        </motion.a>
+        </a>
       </div>
 
-      <div className="px-5 py-3 border-t border-white/5">
-        <p className="text-sm text-text-secondary truncate">{title}</p>
+      <div style={{ padding: "0.85rem 1.25rem", borderTop: "1px solid #eeedea" }}>
+        <p style={{ color: "#6b7280", fontSize: "0.88rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+          {title}
+        </p>
       </div>
     </div>
   );

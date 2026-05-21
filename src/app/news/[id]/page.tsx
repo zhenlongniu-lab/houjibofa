@@ -33,80 +33,125 @@ export default async function NewsDetailPage({ params, searchParams }: Props) {
   if (!item) notFound();
 
   return (
-    <div className="relative flex-1 flex flex-col">
-      <main className="relative z-10 flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 py-12">
+    <>
+      {/* Top bar */}
+      <header
+        style={{
+          maxWidth: 800,
+          margin: "0 auto 1.25rem",
+          padding: "1rem 0.25rem 0",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Link
+          href="/"
+          style={{
+            color: "#8b8984",
+            textDecoration: "none",
+            fontSize: "0.95rem",
+            letterSpacing: "0.05em",
+          }}
+        >
+          厚积薄发
+        </Link>
+      </header>
+
+      <article className="paper">
         {/* Back link */}
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm text-text-muted hover:text-accent transition-colors mb-8 group"
+          style={{
+            color: "#9ca3af",
+            textDecoration: "none",
+            fontSize: "0.88rem",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.35rem",
+            marginBottom: "1.5rem",
+          }}
         >
-          <svg
-            className="w-4 h-4 transition-transform group-hover:-translate-x-0.5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-          返回首页
+          ← 返回首页
         </Link>
 
         {/* Article header */}
-        <header className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-[0.7rem] tracking-widest uppercase text-accent/70 font-medium">
-              {String(item.order).padStart(2, "0")}
-            </span>
-            <span className="text-xs text-text-muted">{item.date}</span>
+        <header style={{ marginBottom: "2rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.75rem" }}>
+            <span style={{ color: "#b8b6b0", fontSize: "0.8rem" }}>{item.date}</span>
             {item.tags.map((tag) => (
-              <span
-                key={tag}
-                className="text-[0.65rem] px-2 py-0.5 rounded-full bg-white/[0.04] text-text-muted border border-white/[0.04]"
-              >
+              <span key={tag} className="tag">
                 {tag}
               </span>
             ))}
           </div>
 
-          <h1 className="text-3xl sm:text-4xl font-bold text-text-primary leading-tight mb-6">
-            {item.title}
-          </h1>
-
-          <p className="text-lg text-text-secondary leading-relaxed">{item.summary}</p>
+          <h1 className="section-title">{item.title}</h1>
+          <p style={{ color: "#374151", fontSize: "1.05rem", lineHeight: 1.9, marginTop: "1rem" }}>
+            {item.summary}
+          </p>
         </header>
 
         {/* Image */}
-        <div className="glass overflow-hidden mb-10">
-          <div
-            className="w-full aspect-[16/9] bg-cover bg-center"
-            style={{ backgroundImage: `url(${item.imageUrl})` }}
-          />
-        </div>
+        <div
+          style={{
+            width: "100%",
+            aspectRatio: "16/9",
+            borderRadius: 8,
+            backgroundImage: `url(${item.imageUrl})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            marginBottom: "2.5rem",
+          }}
+        />
 
         {/* Video */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-text-primary mb-4">视频片段</h2>
+        <section style={{ marginBottom: "2.5rem" }}>
+          <h2
+            style={{
+              fontFamily: 'Georgia, "Times New Roman", serif',
+              fontSize: "1.3rem",
+              fontWeight: 800,
+              color: "#1a1a1a",
+              marginBottom: "1rem",
+            }}
+          >
+            视频片段
+          </h2>
           <VideoPlayer videoUrl={item.videoUrl} title={item.title} />
         </section>
 
         {/* Full content */}
-        <section className="glass p-8">
-          <h2 className="text-xl font-semibold text-text-primary mb-6">详细报道</h2>
-          <div className="prose prose-invert prose-sm max-w-none">
+        <section>
+          <h2
+            style={{
+              fontFamily: 'Georgia, "Times New Roman", serif',
+              fontSize: "1.3rem",
+              fontWeight: 800,
+              color: "#1a1a1a",
+              marginBottom: "1.25rem",
+            }}
+          >
+            详细报道
+          </h2>
+          <div style={{ fontSize: "1.05rem", lineHeight: 2, color: "#374151" }}>
             {item.fullContent.split("\n").map((p, i) => (
-              <p key={i} className="text-text-secondary leading-relaxed mb-4">
+              <p key={i} style={{ marginBottom: "1rem" }}>
                 {p}
               </p>
             ))}
           </div>
         </section>
-      </main>
 
-      <footer className="relative z-10 w-full text-center pb-8">
-        <p className="text-xs text-text-muted">
-          数据来源：央视网 · 每日自动更新
-        </p>
+        <div className="paper-footer">
+          <span>数据来源：央视网</span>
+          <span>{item.date}</span>
+        </div>
+      </article>
+
+      <footer style={{ textAlign: "center", padding: "0 0 2rem", color: "#b8b6b0", fontSize: "0.8rem" }}>
+        厚积薄发 · 日拱一卒，功不唐捐
       </footer>
-    </div>
+    </>
   );
 }

@@ -1,75 +1,210 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-glass: rgba(255, 255, 255, 0.06);
-  --color-glass-border: rgba(255, 255, 255, 0.1);
-  --color-glass-hover: rgba(255, 255, 255, 0.1);
-  --color-accent: #c9a96e;
-  --color-accent-dim: #a68a4e;
-  --color-text-primary: #f5f0eb;
-  --color-text-secondary: rgba(245, 240, 235, 0.65);
-  --color-text-muted: rgba(245, 240, 235, 0.4);
-}
-
-:root {
-  --bg-gradient-start: #08080f;
-  --bg-gradient-end: #141428;
+  --color-paper: #faf9f6;
+  --color-paper-dark: #f5f4f0;
+  --color-bg: #e8e6df;
+  --color-text-heading: #1a1a1a;
+  --color-text-body: #374151;
+  --color-text-muted: #9ca3af;
+  --color-text-subtle: #b8b6b0;
+  --color-border: #d8d6cf;
+  --color-border-light: #eae9e4;
+  --color-border-lighter: #eeedea;
+  --color-btn: #1a1a1a;
+  --color-btn-hover: #374151;
+  --color-tag-green-text: #1a7f37;
+  --color-tag-green-bg: #ddf4e4;
+  --color-tag-amber-text: #9a5b13;
+  --color-tag-amber-bg: #fef3cd;
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+  scrollbar-color: #d8d6cf transparent;
 }
 
 body {
-  background: linear-gradient(160deg, var(--bg-gradient-start) 0%, #0d0d1a 40%, var(--bg-gradient-end) 100%);
-  color: var(--color-text-primary);
-  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: #e8e6df;
+  color: var(--color-text-body);
+  font-family: system-ui, -apple-system, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 1rem;
+  line-height: 1.8;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+/* Paper card — the core element */
+.paper {
+  max-width: 800px;
+  margin: 0 auto 1.5rem;
+  background: #faf9f6;
+  border-radius: 2px;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 4px 16px rgba(0, 0, 0, 0.04);
+  padding: 3rem 4rem;
 }
 
-.glass {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
+@media (max-width: 680px) {
+  .paper {
+    padding: 1.5rem 1.25rem;
+    margin-bottom: 1rem;
+  }
 }
 
-.glass-hover {
-  transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+.paper-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.25rem;
+  margin-top: 2.5rem;
+  border-top: 1px solid #eae9e4;
+  font-size: 0.8rem;
+  color: #b8b6b0;
 }
 
-.glass-hover:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.16);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+/* Section title — Georgia serif */
+.section-title {
+  font-family: Georgia, "Times New Roman", "Noto Serif SC", serif;
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.5rem;
 }
 
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+.section-subtitle {
+  color: #9ca3af;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 1.75rem;
 }
 
-.shimmer {
-  background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 100%);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
+/* Product-style card */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 4px 12px rgba(0, 0, 0, 0.06),
+    0 12px 32px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
+.card:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 6px 18px rgba(0, 0, 0, 0.08),
+    0 16px 40px rgba(0, 0, 0, 0.06);
+}
+
+.card-header {
+  background: #faf9f7;
+  padding: 1.1rem 1.75rem 0.85rem;
+  border-bottom: 1px solid #eeedea;
+}
+
+.card-body {
+  padding: 1.25rem 1.75rem 1.5rem;
+}
+
+/* Daily card (compact) */
+.daily-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.5rem 1.25rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.daily-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  color: #faf9f6;
+  background: #1a1a1a;
+  text-decoration: none;
+  font-size: 0.95rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: 4px;
+  border: 1px solid #1a1a1a;
+  transition: background 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #374151;
+  border-color: #374151;
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  color: #374151;
+  background: transparent;
+  text-decoration: none;
+  font-size: 0.95rem;
+  padding: 0.4rem 0;
+  border: 1px solid #d8d6cf;
+  border-radius: 4px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-outline:hover {
+  background: #f0efeb;
+  border-color: #b0aea6;
+}
+
+/* Double line divider (for section headers) */
+.double-divider {
+  border-bottom: 3px double #1a1a1a;
+}
+
+/* Tag */
+.tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  color: #5b6b7a;
+  background: #e4e8ec;
+  padding: 0.1rem 0.5rem;
+  border-radius: 3px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* News grid — 2 columns, collapses on mobile */
+.news-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 680px) {
+  .news-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Line clamp utilities */
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;

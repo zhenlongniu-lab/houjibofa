@@ -1,12 +1,8 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Link from "next/link";
 import type { NewsItem } from "@/lib/types";
 
 interface NewsCardProps {
   item: NewsItem;
-  index: number;
 }
 
 function formatDuration(seconds: number): string {
@@ -15,71 +11,113 @@ function formatDuration(seconds: number): string {
   return `${m}:${s.toString().padStart(2, "0")}`;
 }
 
-export default function NewsCard({ item, index }: NewsCardProps) {
+export default function NewsCard({ item }: NewsCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{
-        duration: 0.6,
-        delay: 0.1 * index,
-        ease: [0.25, 0.1, 0.25, 1],
-      }}
+    <Link
+      href={`/news/${item.id}?date=${item.date}`}
+      className="daily-card"
+      style={{ textDecoration: "none", color: "inherit" }}
     >
-      <Link href={`/news/${item.id}?date=${item.date}`} className="block group">
-        <article className="glass glass-hover p-0 overflow-hidden h-full flex flex-col">
-          <div className="relative aspect-[16/9] overflow-hidden">
-            <div
-              className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-              style={{ backgroundImage: `url(${item.imageUrl})` }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+      {/* Thumbnail */}
+      <div
+        style={{
+          width: "100%",
+          aspectRatio: "16/9",
+          borderRadius: 6,
+          backgroundImage: `url(${item.imageUrl})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          marginBottom: "0.75rem",
+          position: "relative",
+        }}
+      >
+        <span
+          style={{
+            position: "absolute",
+            bottom: 8,
+            left: 8,
+            background: "rgba(0,0,0,0.65)",
+            color: "#faf9f6",
+            fontSize: "0.7rem",
+            padding: "0.15rem 0.5rem",
+            borderRadius: 3,
+            fontFamily: "monospace",
+          }}
+        >
+          {formatDuration(item.duration)}
+        </span>
+        <span
+          style={{
+            position: "absolute",
+            top: 8,
+            left: 8,
+            color: "rgba(255,255,255,0.7)",
+            fontSize: "0.6rem",
+            fontWeight: 500,
+            letterSpacing: "0.15em",
+          }}
+        >
+          {String(item.order).padStart(2, "0")}
+        </span>
+      </div>
 
-            <span className="absolute bottom-3 right-3 glass px-2.5 py-1 text-xs text-text-secondary rounded-full">
-              {formatDuration(item.duration)}
+      {/* Title — Georgia serif */}
+      <div
+        style={{
+          fontFamily: 'Georgia, "Times New Roman", "Noto Serif SC", serif',
+          fontSize: "1.1rem",
+          fontWeight: 800,
+          color: "#1a1a1a",
+          marginBottom: "0.35rem",
+          lineHeight: 1.4,
+        }}
+        className="line-clamp-2"
+      >
+        {item.title}
+      </div>
+
+      {/* Summary */}
+      <p
+        style={{
+          fontSize: "0.92rem",
+          lineHeight: 1.75,
+          color: "#374151",
+          flex: 1,
+          marginBottom: "0.75rem",
+        }}
+        className="line-clamp-3"
+      >
+        {item.summary}
+      </p>
+
+      {/* Tags */}
+      {item.tags.length > 0 && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", marginBottom: "0.75rem" }}>
+          {item.tags.slice(0, 3).map((tag) => (
+            <span key={tag} className="tag">
+              {tag}
             </span>
+          ))}
+        </div>
+      )}
 
-            <span className="absolute top-3 left-3 text-[0.65rem] tracking-widest uppercase text-accent/70 font-medium">
-              {String(item.order).padStart(2, "0")}
-            </span>
-          </div>
-
-          <div className="flex-1 p-5 flex flex-col gap-3">
-            <h3 className="text-lg font-semibold text-text-primary leading-snug group-hover:text-accent transition-colors duration-300 line-clamp-2">
-              {item.title}
-            </h3>
-
-            <p className="text-sm text-text-secondary leading-relaxed line-clamp-3 flex-1">
-              {item.summary}
-            </p>
-
-            {item.tags.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 pt-1">
-                {item.tags.slice(0, 3).map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-[0.65rem] px-2 py-0.5 rounded-full bg-white/[0.04] text-text-muted border border-white/[0.04]"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
-
-            <div className="flex items-center gap-1 text-xs text-accent/50 group-hover:text-accent transition-colors duration-300 mt-1">
-              <span>查看详情</span>
-              <svg
-                className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </div>
-          </div>
-        </article>
-      </Link>
-    </motion.div>
+      {/* CTA */}
+      <div
+        style={{
+          display: "block",
+          textAlign: "center",
+          color: "#faf9f6",
+          background: "#1a1a1a",
+          textDecoration: "none",
+          fontSize: "0.88rem",
+          padding: "0.5rem 1rem",
+          borderRadius: 4,
+          border: "1px solid #1a1a1a",
+          marginTop: "auto",
+        }}
+      >
+        阅读详情 →
+      </div>
+    </Link>
   );
 }

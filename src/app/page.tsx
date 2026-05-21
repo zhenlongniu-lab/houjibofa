@@ -12,51 +12,60 @@ export default function Home() {
   }
 
   return (
-    <div className="relative flex-1 flex flex-col">
+    <>
       <Header />
 
-      <main className="relative z-10 flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 pb-24">
-        {daily ? (
-          <>
-            <div className="mb-8 text-center">
-              <p className="text-sm text-text-muted tracking-wide">
-                {daily.dateFormatted} · 共 {daily.items.length} 条新闻
-              </p>
+      {daily ? (
+        <article className="paper">
+          {/* Date header with double divider */}
+          <div style={{ textAlign: "center", paddingBottom: "1.25rem", marginBottom: "1.25rem", borderBottom: "3px double #1a1a1a" }}>
+            <div
+              style={{
+                fontFamily: 'Georgia, "Times New Roman", "Noto Serif SC", serif',
+                fontSize: "2.2rem",
+                fontWeight: 800,
+                color: "#1a1a1a",
+                letterSpacing: "0.05em",
+                marginBottom: "0.25rem",
+              }}
+            >
+              新闻联播摘要
             </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {daily.items
-                .sort((a, b) => a.order - b.order)
-                .map((item, i) => (
-                  <NewsCard key={item.id} item={item} index={i} />
-                ))}
-            </div>
-          </>
-        ) : (
-          /* Empty state */
-          <div className="flex flex-col items-center justify-center flex-1 py-32">
-            <div className="glass p-12 text-center max-w-md">
-              <div className="text-5xl mb-6 opacity-30">&#x1F4F0;</div>
-              <h2 className="text-xl font-semibold text-text-primary mb-3">
-                今日新闻摘要准备中
-              </h2>
-              <p className="text-sm text-text-secondary leading-relaxed">
-                正在从央视网获取今日《新闻联播》的重点摘要和视频片段。
-                <br />
-                每日自动更新，敬请期待。
-              </p>
-              <div className="mt-6 w-32 h-0.5 bg-accent/20 rounded-full mx-auto shimmer" />
+            <div style={{ color: "#9ca3af", fontSize: "0.9rem" }}>
+              {daily.dateFormatted} · 共 {daily.items.length} 条新闻
             </div>
           </div>
-        )}
-      </main>
+
+          {/* News grid — 2 columns like liziran's dailies */}
+          <div className="news-grid">
+            {daily.items
+              .sort((a, b) => a.order - b.order)
+              .map((item) => (
+                <NewsCard key={item.id} item={item} />
+              ))}
+          </div>
+
+          <div className="paper-footer">
+            <span>数据来源：央视网</span>
+            <span>每日自动更新</span>
+          </div>
+        </article>
+      ) : (
+        <article className="paper" style={{ textAlign: "center", paddingTop: "4rem", paddingBottom: "4rem" }}>
+          <h2 className="section-title">今日新闻摘要准备中</h2>
+          <p style={{ color: "#9ca3af", fontSize: "0.95rem", marginTop: "0.75rem" }}>
+            正在从央视网获取今日《新闻联播》的重点摘要和视频片段。
+            <br />
+            每日自动更新，敬请期待。
+          </p>
+        </article>
+      )}
 
       {/* Footer */}
-      <footer className="relative z-10 w-full text-center pb-8">
-        <p className="text-xs text-text-muted">
-          数据来源：央视网 · 每日自动更新
-        </p>
+      <footer style={{ textAlign: "center", padding: "0 0 2rem", color: "#b8b6b0", fontSize: "0.8rem" }}>
+        厚积薄发 · 日拱一卒，功不唐捐
       </footer>
-    </div>
+
+    </>
   );
 }
