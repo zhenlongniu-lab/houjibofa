@@ -50,7 +50,7 @@ export default function Header() {
         style={{
           fontFamily: '"Songti SC", "SimSun", "宋体", serif',
           color: "#6b7280",
-          fontSize: "0.85rem",
+          fontSize: "1rem",
           marginTop: "0.25rem",
         }}
       >
