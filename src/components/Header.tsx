@@ -10,8 +10,9 @@ export default function Header() {
     >
       <p
         style={{
-          color: "#b8b6b0",
-          fontSize: "0.78rem",
+          fontFamily: '"Songti SC", "SimSun", "宋体", serif',
+          color: "#6b7280",
+          fontSize: "0.82rem",
           letterSpacing: "0.3em",
           marginBottom: "0.5rem",
         }}
@@ -34,8 +35,9 @@ export default function Header() {
 
       <p
         style={{
+          fontFamily: '"Songti SC", "SimSun", "宋体", serif',
           color: "#6b7280",
-          fontSize: "1.05rem",
+          fontSize: "1.15rem",
           lineHeight: 1.8,
           maxWidth: 480,
           margin: "0 auto 0.25rem",
@@ -46,8 +48,9 @@ export default function Header() {
 
       <p
         style={{
-          color: "#b8b6b0",
-          fontSize: "0.82rem",
+          fontFamily: '"Songti SC", "SimSun", "宋体", serif',
+          color: "#6b7280",
+          fontSize: "0.85rem",
           marginTop: "0.25rem",
         }}
       >
