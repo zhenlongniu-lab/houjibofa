@@ -1,0 +1,45 @@
+name: Daily CCTV News Scrape
+
+on:
+  schedule:
+    # Run at 20:30 CST (12:30 UTC) daily — after 新闻联播 airs at 19:00 CST
+    - cron: "30 12 * * *"
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Target date (YYYY-MM-DD), leave empty for today"
+        required: false
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - run: npm ci
+
+      - name: Run scraper
+        run: npx tsx scripts/scrape.ts ${{ github.event.inputs.date || '' }}
+
+      - name: Check for changes
+        id: check
+        run: |
+          if [ -n "$(git status --porcelain src/data/news/)" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/news/
+          git commit -m "📰 daily: update 新闻联播 news data"
+          git push
