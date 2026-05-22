@@ -320,20 +320,15 @@ const targetDate = date || new Date(Date.now() - 86400000).toISOString().split("
   console.log(`Ranked top ${ranked.length}:`);
   ranked.forEach((r) => console.log(`  [${r.score}] ${r.text.slice(0, 50)}...`));
 
-  // Build items with images from the video items
+  // Build items
   const items = ranked.map((r, i) => ({
     id: `xwlb-${targetDate.replace(/-/g, "")}-${String(i + 1).padStart(2, "0")}`,
     date: targetDate,
     title: r.text,
     summary: r.text,
     fullContent: r.text,
-    imageUrl:
-      i === 0 && primary.image
-        ? primary.image
-        : `https://picsum.photos/seed/xwlb${targetDate.replace(/-/g, "")}${i}/800/450`,
     videoUrl: primary.videoUrl || `https://tv.cctv.com/lm/xwlb/`,
     videoId: primary.guid || primary.id,
-    duration: 0,
     order: i + 1,
     tags: generateTags(r.text),
   }));

@@ -4,10 +4,8 @@ export interface NewsItem {
   title: string;
   summary: string;
   fullContent: string;
-  imageUrl: string;
   videoUrl: string;
   videoId: string;
-  duration: number;
   order: number;
   tags: string[];
 }

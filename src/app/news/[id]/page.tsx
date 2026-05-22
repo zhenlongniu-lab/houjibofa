@@ -92,19 +92,6 @@ export default async function NewsDetailPage({ params, searchParams }: Props) {
           </p>
         </header>
 
-        {/* Image */}
-        <div
-          style={{
-            width: "100%",
-            aspectRatio: "16/9",
-            borderRadius: 8,
-            backgroundImage: `url(${item.imageUrl})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            marginBottom: "2.5rem",
-          }}
-        />
-
         {/* Video */}
         <section style={{ marginBottom: "2.5rem" }}>
           <h2
