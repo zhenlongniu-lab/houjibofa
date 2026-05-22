@@ -328,8 +328,9 @@ const targetDate = date || new Date(Date.now() - 86400000).toISOString().split("
     summary: r.text,
     fullContent: r.text,
     imageUrl:
-      primary.image ||
-      `https://picsum.photos/seed/xwlb${targetDate.replace(/-/g, "")}${i}/800/450`,
+      i === 0 && primary.image
+        ? primary.image
+        : `https://picsum.photos/seed/xwlb${targetDate.replace(/-/g, "")}${i}/800/450`,
     videoUrl: primary.videoUrl || `https://tv.cctv.com/lm/xwlb/`,
     videoId: primary.guid || primary.id,
     duration: 0,
