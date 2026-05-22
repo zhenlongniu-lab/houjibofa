@@ -138,6 +138,64 @@ async function fetchFullContent(pageUrl: string): Promise<string> {
   }
 }
 
+/**
+ * Parse the episode summary text into individual news items.
+ * Format: "1.xxx；\n2.xxx；\n...12.国内联播快讯：\n（1）...\n13.xxx..."
+ */
+function parseNewsItems(text: string): string[] {
+  // Remove header line
+  const body = text.replace(/^本期节目主要内容[：:]\s*/g, "").trim();
+
+  // Split by top-level numbered items: "1.", "2.", ..., "16."
+  const parts = body.split(/\n(?=\d{1,2}\.)/);
+  const items: string[] = [];
+
+  for (const part of parts) {
+    // Remove the leading number and clean
+    const cleaned = part.replace(/^\d{1,2}\.\s*/, "").trim();
+    if (!cleaned) continue;
+    // Skip "国内联播快讯" and "国际联播快讯" sub-items (they're aggregates)
+    if (cleaned.startsWith("国内联播快讯") || cleaned.startsWith("国际联播快讯")) continue;
+    // Skip "二十四节气"
+    if (cleaned.startsWith("二十四节气")) continue;
+    // Remove trailing semicolons and whitespace
+    const title = cleaned.replace(/[；;]+$/, "").trim();
+    if (title.length > 3) items.push(title);
+  }
+
+  return items;
+}
+
+const IMPORTANCE_SCORE: [RegExp, number][] = [
+  [/习近平/g, 100],
+  [/李强/g, 50],
+  [/总理/g, 45],
+  [/常委/g, 45],
+  [/中央/g, 30],
+  [/国务院/g, 30],
+  [/外交/g, 25],
+  [/国际/g, 25],
+  [/军事/g, 20],
+  [/军队/g, 20],
+  [/改革/g, 20],
+  [/经济/g, 20],
+  [/科技/g, 15],
+  [/航天/g, 15],
+  [/文化/g, 10],
+  [/教育/g, 10],
+  [/医疗/g, 10],
+  [/民生/g, 10],
+];
+
+function scoreImportance(text: string): number {
+  let score = 0;
+  for (const [pattern, points] of IMPORTANCE_SCORE) {
+    pattern.lastIndex = 0; // reset g flag state
+    if (pattern.test(text)) score += points;
+  }
+  return score;
+}
+
 function generateTags(title: string): string[] {
   const tagMap: Record<string, string[]> = {
     习近平: ["时政", "领导人"],
@@ -224,40 +282,60 @@ const targetDate = date || new Date(Date.now() - 86400000).toISOString().split("
 
   console.log(`Filtered ${videoItems.length} items -> ${filtered.length} for ${targetDate}`);
 
-  // Process each video item
-  const items = [];
-  for (let i = 0; i < filtered.length; i++) {
-    const video = filtered[i];
-    console.log(`Processing ${i + 1}/${filtered.length}: ${video.title}`);
+  // Use the first (19:00) episode as primary source for parsing
+  const primary = filtered[0];
+  const summaryText = primary.brief || "";
 
-    // Try to get full content from the video page
-    let fullContent = video.brief;
-    if (video.videoUrl) {
-      const content = await fetchFullContent(video.videoUrl);
-      if (content) {
-        fullContent = content;
+  // Parse into individual news items
+  let parsed = parseNewsItems(summaryText);
+
+  // If first episode has sparse content, also try the second episode
+  if (parsed.length < 8 && filtered.length > 1) {
+    const secondary = filtered[1];
+    if (secondary.brief) {
+      const extra = parseNewsItems(secondary.brief);
+      // Merge without duplicates (simple prefix match)
+      const existing = new Set(parsed.map((s) => s.slice(0, 15)));
+      for (const item of extra) {
+        if (!existing.has(item.slice(0, 15))) {
+          parsed.push(item);
+        }
       }
     }
-
-    items.push({
-      id: `xwlb-${targetDate.replace(/-/g, "")}-${String(i + 1).padStart(2, "0")}`,
-      date: targetDate,
-      title: video.title,
-      summary: video.brief || video.title,
-      fullContent: fullContent || video.title,
-      imageUrl:
-        video.image ||
-        `https://picsum.photos/seed/xwlb${targetDate.replace(/-/g, "")}${i}/800/450`,
-      videoUrl: video.videoUrl || `https://tv.cctv.com/lm/xwlb/`,
-      videoId: video.guid || video.id,
-      duration: formatDuration(video.duration),
-      order: i + 1,
-      tags: generateTags(video.title),
-    });
-
-    // Small delay to avoid rate limiting
-    await new Promise((r) => setTimeout(r, 500));
   }
+
+  if (parsed.length === 0) {
+    console.log(`No news items parsed for ${targetDate}`);
+    return;
+  }
+
+  console.log(`Parsed ${parsed.length} individual news items`);
+
+  // Score and rank by importance, take top 8
+  const ranked = parsed
+    .map((text, i) => ({ text, score: scoreImportance(text), idx: i }))
+    .sort((a, b) => b.score - a.score || a.idx - b.idx)
+    .slice(0, 8);
+
+  console.log(`Ranked top ${ranked.length}:`);
+  ranked.forEach((r) => console.log(`  [${r.score}] ${r.text.slice(0, 50)}...`));
+
+  // Build items with images from the video items
+  const items = ranked.map((r, i) => ({
+    id: `xwlb-${targetDate.replace(/-/g, "")}-${String(i + 1).padStart(2, "0")}`,
+    date: targetDate,
+    title: r.text,
+    summary: r.text,
+    fullContent: r.text,
+    imageUrl:
+      primary.image ||
+      `https://picsum.photos/seed/xwlb${targetDate.replace(/-/g, "")}${i}/800/450`,
+    videoUrl: primary.videoUrl || `https://tv.cctv.com/lm/xwlb/`,
+    videoId: primary.guid || primary.id,
+    duration: 0,
+    order: i + 1,
+    tags: generateTags(r.text),
+  }));
 
   const dailyData = {
     date: targetDate,
