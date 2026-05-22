@@ -5,19 +5,9 @@ import path from "path";
 const DATA_DIR = path.join(process.cwd(), "src/data/news");
 
 export function getLatestNews(): DailyNews | null {
-  if (!fs.existsSync(DATA_DIR)) return null;
-
-  const files = fs
-    .readdirSync(DATA_DIR)
-    .filter((f) => f.endsWith(".json"))
-    .sort()
-    .reverse();
-
-  if (files.length === 0) return null;
-
-  const latest = files[0];
-  const raw = fs.readFileSync(path.join(DATA_DIR, latest), "utf-8");
-  return JSON.parse(raw) as DailyNews;
+  // Always show yesterday — scrape runs at 8:30 AM for previous day's 新闻联播
+  const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
+  return getNewsByDate(yesterday);
 }
 
 export function getNewsByDate(date: string): DailyNews | null {
