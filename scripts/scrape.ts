@@ -171,7 +171,8 @@ function generateTags(title: string): string[] {
 }
 
 async function scrapeDaily(date?: string) {
-  const targetDate = date || new Date().toISOString().split("T")[0];
+  // Default to yesterday — 新闻联播 airs at 7 PM, available next morning
+const targetDate = date || new Date(Date.now() - 86400000).toISOString().split("T")[0];
   console.log(`Scraping 新闻联播 for ${targetDate}...`);
 
   // Fetch video list
