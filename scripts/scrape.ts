@@ -33,6 +33,13 @@ function formatDateCN(dateStr: string): string {
   return `${parts[0]}年${parseInt(parts[1])}月${parseInt(parts[2])}日`;
 }
 
+function extractDateFromTitle(title: string): string | null {
+  // Title format: "《新闻联播》 20260521 21:00"
+  const match = title.match(/(\d{4})(\d{2})(\d{2})/);
+  if (!match) return null;
+  return `${match[1]}-${match[2]}-${match[3]}`;
+}
+
 function formatDuration(seconds: string | number): number {
   const s = typeof seconds === "string" ? parseInt(seconds) : seconds;
   return isNaN(s) ? 0 : s;
@@ -204,11 +211,24 @@ const targetDate = date || new Date(Date.now() - 86400000).toISOString().split("
     return;
   }
 
+  // Filter to target date only — CCTV API returns mixed dates
+  const filtered = videoItems.filter((v) => {
+    const itemDate = extractDateFromTitle(v.title);
+    return itemDate === targetDate;
+  });
+
+  if (filtered.length === 0) {
+    console.log(`No items match target date ${targetDate} after filtering.`);
+    return;
+  }
+
+  console.log(`Filtered ${videoItems.length} items -> ${filtered.length} for ${targetDate}`);
+
   // Process each video item
   const items = [];
-  for (let i = 0; i < videoItems.length; i++) {
-    const video = videoItems[i];
-    console.log(`Processing ${i + 1}/${videoItems.length}: ${video.title}`);
+  for (let i = 0; i < filtered.length; i++) {
+    const video = filtered[i];
+    console.log(`Processing ${i + 1}/${filtered.length}: ${video.title}`);
 
     // Try to get full content from the video page
     let fullContent = video.brief;
