@@ -15,5 +15,6 @@ export interface NewsItem {
 export interface DailyNews {
   date: string;
   dateFormatted: string;
+  episodeImage: string;
   items: NewsItem[];
 }

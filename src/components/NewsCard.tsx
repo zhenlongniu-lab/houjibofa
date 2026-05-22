@@ -35,49 +35,25 @@ export default function NewsCard({ item }: NewsCardProps) {
       style={{ textDecoration: "none", color: "inherit" }}
     >
       <article
-        className="news-card"
+        className="daily-card"
         style={{
-          borderLeft: `3px solid ${accentColor}`,
-          padding: "1.25rem 1.25rem 1.25rem 1.5rem",
-          background: "#fefdfb",
-          borderRadius: 4,
-          display: "flex",
-          flexDirection: "column",
-          height: "100%",
-          transition: "box-shadow 0.15s ease",
+          borderTop: `3px solid ${accentColor}`,
         }}
       >
-        {/* Order number + primary tag */}
-        <div
+        {/* Number */}
+        <span
           style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            marginBottom: "0.75rem",
+            fontFamily: "Georgia, serif",
+            fontSize: "1.4rem",
+            fontWeight: 800,
+            color: accentColor,
+            lineHeight: 1,
+            marginBottom: "0.5rem",
+            display: "block",
           }}
         >
-          <span
-            style={{
-              fontFamily: "Georgia, serif",
-              fontSize: "1.3rem",
-              fontWeight: 800,
-              color: accentColor,
-              lineHeight: 1,
-            }}
-          >
-            {String(item.order).padStart(2, "0")}
-          </span>
-          <span
-            style={{
-              fontSize: "0.7rem",
-              color: "#6b7280",
-              letterSpacing: "0.05em",
-              textTransform: "uppercase",
-            }}
-          >
-            {primaryTag}
-          </span>
-        </div>
+          {String(item.order).padStart(2, "0")}
+        </span>
 
         {/* Title */}
         <h3
@@ -86,24 +62,24 @@ export default function NewsCard({ item }: NewsCardProps) {
             fontSize: "1.05rem",
             fontWeight: 700,
             color: "#1a1a1a",
-            lineHeight: 1.55,
-            marginBottom: "0.5rem",
+            lineHeight: 1.6,
             flex: 1,
+            marginBottom: "0.75rem",
           }}
         >
           {item.title}
         </h3>
 
-        {/* Tags row */}
-        {item.tags.length > 1 && (
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "0.3rem",
-              marginTop: "0.5rem",
-            }}
-          >
+        {/* Tags + CTA row */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginTop: "auto",
+          }}
+        >
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem" }}>
             {item.tags.slice(1, 4).map((tag) => (
               <span
                 key={tag}
@@ -119,21 +95,7 @@ export default function NewsCard({ item }: NewsCardProps) {
               </span>
             ))}
           </div>
-        )}
-
-        {/* Read link */}
-        <div
-          style={{
-            marginTop: "1rem",
-            fontSize: "0.78rem",
-            color: "#9ca3af",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.25rem",
-          }}
-        >
-          阅读详情
-          <span style={{ fontSize: "0.7rem" }}>→</span>
+          <span style={{ fontSize: "0.78rem", color: "#9ca3af" }}>→</span>
         </div>
       </article>
     </Link>

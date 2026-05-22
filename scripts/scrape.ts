@@ -341,6 +341,7 @@ const targetDate = date || new Date(Date.now() - 86400000).toISOString().split("
   const dailyData = {
     date: targetDate,
     dateFormatted: formatDateCN(targetDate),
+    episodeImage: primary.image || "",
     items,
   };
 
