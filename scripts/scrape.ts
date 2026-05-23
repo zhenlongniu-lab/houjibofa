@@ -358,3 +358,5 @@ const targetDate = date || new Date(Date.now() - 86400000).toISOString().split("
 // Run
 const dateArg = process.argv[2];
 scrapeDaily(dateArg).catch(console.error);
+
+export { scrapeDaily };
