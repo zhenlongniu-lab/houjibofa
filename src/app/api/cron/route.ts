@@ -114,7 +114,7 @@ export async function GET() {
     return NextResponse.json({ ok: true, message: `No videos for ${targetDate}` });
   }
 
-  const filtered = videoItems.filter((v) => extractDateFromTitle(v.title) === targetDate);
+  const filtered = videoItems.filter((v: { title: string }) => extractDateFromTitle(v.title) === targetDate);
   if (filtered.length === 0) {
     return NextResponse.json({ ok: true, message: `No matching items for ${targetDate}` });
   }
