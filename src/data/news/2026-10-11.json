@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-11",
+  "dateFormatted": "2026年10月11日",
+  "episodeImage": "https://p2.img.cctvpic.com/fmspic/2026/10/11/8ef0b04d9c9e4251bfb6dcfa398e26b6-1.jpg",
+  "items": [
+    {
+      "id": "xwlb-20261011-01",
+      "date": "2026-10-11",
+      "title": "沙特利雅得机场遭袭致12人死309人伤 胡塞武装称也门萨那国际机场遭空袭",
+      "summary": "沙特利雅得机场遭袭致12人死309人伤 胡塞武装称也门萨那国际机场遭空袭",
+      "fullContent": "沙特利雅得机场遭袭致12人死309人伤 胡塞武装称也门萨那国际机场遭空袭",
+      "videoUrl": "https://tv.cctv.com/2026/10/11/VIDEUPXHgmLKPvBh2CClGOft261011.shtml",
+      "videoId": "8ef0b04d9c9e4251bfb6dcfa398e26b6",
+      "order": 1,
+      "tags": [
+        "国际"
+      ]
+    },
+    {
+      "id": "xwlb-20261011-02",
+      "date": "2026-10-11",
+      "title": "【文化中国行】无声的见证 不朽的信仰",
+      "summary": "【文化中国行】无声的见证 不朽的信仰",
+      "fullContent": "【文化中国行】无声的见证 不朽的信仰",
+      "videoUrl": "https://tv.cctv.com/2026/10/11/VIDEUPXHgmLKPvBh2CClGOft261011.shtml",
+      "videoId": "8ef0b04d9c9e4251bfb6dcfa398e26b6",
+      "order": 2,
+      "tags": [
+        "文化"
+      ]
+    },
+    {
+      "id": "xwlb-20261011-03",
+      "date": "2026-10-11",
+      "title": "【新思想引领新征程】守护绿水青山 共绘美丽中国新画卷",
+      "summary": "【新思想引领新征程】守护绿水青山 共绘美丽中国新画卷",
+      "fullContent": "【新思想引领新征程】守护绿水青山 共绘美丽中国新画卷",
+      "videoUrl": "https://tv.cctv.com/2026/10/11/VIDEUPXHgmLKPvBh2CClGOft261011.shtml",
+      "videoId": "8ef0b04d9c9e4251bfb6dcfa398e26b6",
+      "order": 3,
+      "tags": [
+        "综合"
+      ]
+    },
+    {
+      "id": "xwlb-20261011-04",
+      "date": "2026-10-11",
+      "title": "王沪宁会见越南国会主席",
+      "summary": "王沪宁会见越南国会主席",
+      "fullContent": "王沪宁会见越南国会主席",
+      "videoUrl": "https://tv.cctv.com/2026/10/11/VIDEUPXHgmLKPvBh2CClGOft261011.shtml",
+      "videoId": "8ef0b04d9c9e4251bfb6dcfa398e26b6",
+      "order": 4,
+      "tags": [
+        "综合"
+      ]
+    },
+    {
+      "id": "xwlb-20261011-05",
+      "date": "2026-10-11",
+      "title": "中国物流业景气指数连续5个月扩张",
+      "summary": "中国物流业景气指数连续5个月扩张",
+      "fullContent": "中国物流业景气指数连续5个月扩张",
+      "videoUrl": "https://tv.cctv.com/2026/10/11/VIDEUPXHgmLKPvBh2CClGOft261011.shtml",
+      "videoId": "8ef0b04d9c9e4251bfb6dcfa398e26b6",
+      "order": 5,
+      "tags": [
+        "综合"
+      ]
+    },
+    {
+      "id": "xwlb-20261011-06",
+      "date": "2026-10-11",
+      "title": "前三季度新开工重大水利工程数量超去年全年",
+      "summary": "前三季度新开工重大水利工程数量超去年全年",
+      "fullContent": "前三季度新开工重大水利工程数量超去年全年",
+      "videoUrl": "https://tv.cctv.com/2026/10/11/VIDEUPXHgmLKPvBh2CClGOft261011.shtml",
+      "videoId": "8ef0b04d9c9e4251bfb6dcfa398e26b6",
+      "order": 6,
+      "tags": [
+        "综合"
+      ]
+    },
+    {
+      "id": "xwlb-20261011-07",
+      "date": "2026-10-11",
+      "title": "我国氢能产业进入发展快车道",
+      "summary": "我国氢能产业进入发展快车道",
+      "fullContent": "我国氢能产业进入发展快车道",
+      "videoUrl": "https://tv.cctv.com/2026/10/11/VIDEUPXHgmLKPvBh2CClGOft261011.shtml",
+      "videoId": "8ef0b04d9c9e4251bfb6dcfa398e26b6",
+      "order": 7,
+      "tags": [
+        "综合"
+      ]
+    },
+    {
+      "id": "xwlb-20261011-08",
+      "date": "2026-10-11",
+      "title": "新皇岗口岸落成 明日开通运行",
+      "summary": "新皇岗口岸落成 明日开通运行",
+      "fullContent": "新皇岗口岸落成 明日开通运行",
+      "videoUrl": "https://tv.cctv.com/2026/10/11/VIDEUPXHgmLKPvBh2CClGOft261011.shtml",
+      "videoId": "8ef0b04d9c9e4251bfb6dcfa398e26b6",
+      "order": 8,
+      "tags": [
+        "综合"
+      ]
+    }
+  ]
+}
